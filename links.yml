@@ -17,15 +17,15 @@ shortcut_icon: ./favicon.ico
 # 特别的如图标 Github 使用时应填写 fa-brands fa-github
 logo: fa-solid fa-compass
 # 网站关键字
-keywords: 导航页, 导航, OneNav, GenEasy, Github, Github Pages
+keywords: 导航页, 导航, WebNav, GenEasy, Github, Github Pages, YDTJv
 # 网站描述
 description: 个人网址集
 # 个人主页
-home_url: https://www.imkk.uk/
+home_url: https://www.home.ydtjv.cn/
 # 个人邮箱
 email: Nav@imkk.uk
 # GitHub链接
-github_url: https://github.com/MadisonWirtanen
+github_url: https://github.com/ydtjv
 ################
 ## 网址链接
 ################
