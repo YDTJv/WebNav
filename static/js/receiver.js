@@ -309,8 +309,12 @@ async function getEncryptedData() {
         const data = await response.json();
 
         if (data.status === "success") {
-            // 创建并下载文件
-            const blob = new Blob([data.all_enc_data], { type: 'application/octet-stream' });
+            const jsonString = JSON.stringify(data.all_enc_data);
+            const utf8Bytes = new TextEncoder().encode(jsonString);
+            const base64String = btoa(String.fromCharCode(...utf8Bytes));
+
+            // 4. 创建并下载文件
+            const blob = new Blob([base64String], { type: 'application/octet-stream' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
