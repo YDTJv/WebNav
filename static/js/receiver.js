@@ -298,7 +298,7 @@ async function getEncryptedData() {
     try {
         showMessage('info', '正在获取加密数据包...');
 
-        const response = await fetch(`${serverAddress}/receiver/get_enc_data`, {
+        const response = await fetch(`${serverAddress}/receiver/get_enc_data?username=${username}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
