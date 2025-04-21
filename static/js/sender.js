@@ -365,6 +365,14 @@ async function generateEncryptionPackage() {
 
 // 发送签名加密包
 function sendEncryptionPackage() {
+    const dataName = selectedData.value;
+    const receiverName = selectedReceiver.value;
+
+    if (!dataName || !receiverName) {
+        showMessage('error', '请选择数据和接收方');
+        return;
+    }
+
     // 创建弹窗
     const modalHtml = `
         <div class="modal active" id="sendPackageModal">
@@ -432,6 +440,8 @@ function sendEncryptionPackage() {
                     'Username': username
                 },
                 body: JSON.stringify({
+                    data_id: dataName,
+                    receiver: receiverName,
                     sender: username,
                     encrypted_data: base64Content
                 })
