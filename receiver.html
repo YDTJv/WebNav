@@ -1,0 +1,106 @@
+<!--
+ * @Description: 
+ * @Author: DSTBP
+ * @Date: 2025-04-21 15:20:45
+ * @LastEditTime: 2025-04-21 16:13:56
+ * @LastEditors: DSTBP
+-->
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/receiver.css">
+    <link rel="icon" href="static/image/vivian.ico" type="image/x-icon">
+    <title>数据接收端</title>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <div class="container">
+        <!-- 顶部导航栏 -->
+        <nav class="nav-bar">
+            <div class="nav-content">
+                <h1 class="nav-title">数据接收端</h1>
+                <div class="user-info">
+                    <span id="username" class="username"></span>
+                    <button id="logoutBtn" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        退出登录
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 主要内容区 -->
+        <main class="main-content">
+            <div class="grid-container">
+                <!-- 左侧：数据列表 -->
+                <div class="left-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">数据列表</h2>
+                            <div class="data-actions">
+                                <button id="refreshDataBtn" class="data-btn refresh-btn">
+                                    <i class="fas fa-sync-alt"></i>
+                                    刷新列表
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="dataList" class="data-list">
+                                <!-- 数据项将通过JavaScript动态添加 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右侧：操作面板 -->
+                <div class="right-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">数据操作</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="operation-panel">
+                                <!-- 数据选择 -->
+                                <div class="form-group">
+                                    <label>选择请求数据</label>
+                                    <div id="dataSelection" class="data-selection">
+                                        <!-- 复选框将通过JavaScript动态添加 -->
+                                    </div>
+                                </div>
+
+                                <!-- 操作按钮组 -->
+                                <div class="operation-actions">
+                                    <button id="sendRequestBtn" class="operation-btn request-btn">
+                                        <i class="fas fa-paper-plane"></i>
+                                        发送请求
+                                    </button>
+                                    <button id="uploadKeyBtn" class="operation-btn key-btn">
+                                        <i class="fas fa-key"></i>
+                                        发送公钥
+                                    </button>
+                                    <button id="getEncDataBtn" class="operation-btn download-btn">
+                                        <i class="fas fa-download"></i>
+                                        获取加密数据包
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 隐藏的文件输入 -->
+    <input type="file" id="keyFileInput" style="display: none;">
+
+    <script src="static/js/starsky.js"></script>
+    <script src="static/js/receiver.js"></script>
+</body>
+
+</html> 

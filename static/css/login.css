@@ -1,0 +1,245 @@
+:root {
+    --primary: #3498db;
+    --primary-dark: #2980b9;
+    --bg-start: #1A1A1A;
+    --bg-end: #26333F;
+    --text-light: #fff;
+    --text-dark: #333;
+    --input-bg: rgba(255, 255, 255, 0.1);
+    --input-text: #fff;
+    --input-placeholder: rgba(255, 255, 255, 0.5);
+    --success: #4CAF50;
+    --error: #f44336;
+    --warning: #ff9800;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(to bottom, var(--bg-start), var(--bg-end));
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow: hidden;
+}
+
+#canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.login-container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 100%;
+    max-width: 400px;
+    animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+input, select {
+    background: var(--input-bg) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: var(--input-text) !important;
+}
+
+input::placeholder {
+    color: var(--input-placeholder) !important;
+}
+
+input:focus, select:focus {
+    outline: none !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2) !important;
+}
+
+select {
+    background-color: var(--input-bg) !important;
+    color: var(--input-text) !important;
+}
+
+select option {
+    background-color: var(--bg-start);
+    color: var(--text-light);
+}
+
+button {
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+a {
+    transition: all 0.3s ease;
+    color: var(--primary);
+}
+
+a:hover {
+    text-decoration: underline;
+    color: var(--primary-dark);
+}
+
+.login-container h2 {
+    text-align: center;
+    color: var(--text-light); /* 修改此处 */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* 可选的发光效果 */
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.form-group input {
+    width: calc(100% - 22px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.error-message {
+    color: #ff6b6b;
+    text-align: center;
+    margin-top: 10px;
+    display: none;
+}
+
+.enter-system {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--primary);
+    color: var(--text-light);
+    font-size: 20px;
+    font-weight: 500;
+    padding: 18px 48px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+    animation: fadeInUp 1s ease 0.8s both;
+    position: relative;
+    overflow: hidden;
+}
+
+.page-title {
+    color: var(--text-light) !important; 
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* 消息弹窗样式 */
+.message-popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 16px 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 300px;
+    max-width: 400px;
+    animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s;
+    backdrop-filter: blur(8px);
+}
+
+.message-popup.success {
+    background: rgba(76, 175, 80, 0.9);
+    border: 1px solid var(--success);
+}
+
+.message-popup.error {
+    background: rgba(244, 67, 54, 0.9);
+    border: 1px solid var(--error);
+}
+
+.message-popup.info {
+    background: rgba(33, 150, 243, 0.9);
+    border: 1px solid var(--primary);
+}
+
+.message-popup .icon {
+    font-size: 20px;
+    color: white;
+}
+
+.message-popup .message {
+    color: white;
+    font-size: 14px;
+    flex-grow: 1;
+}
+
+.message-popup .close {
+    color: white;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.message-popup .close:hover {
+    opacity: 1;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}

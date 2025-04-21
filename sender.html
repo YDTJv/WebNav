@@ -1,0 +1,181 @@
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/sender.css">
+    <link rel="icon" href="static/image/vivian.ico" type="image/x-icon">
+    <title>数据发送端</title>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <div class="container">
+        <!-- 顶部导航栏 -->
+        <nav class="nav-bar">
+            <div class="nav-content">
+                <h1 class="nav-title">数据发送端</h1>
+                <div class="user-info">
+                    <span id="username" class="username"></span>
+                    <button id="logoutBtn" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        退出登录
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 主要内容区 -->
+        <main class="main-content">
+            <div class="grid-container">
+                <!-- 左侧：数据列表和操作区 -->
+                <div class="left-section">
+                    <!-- 数据列表卡片 -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">数据列表</h2>
+                            <div class="data-actions">
+                                <button id="addDataBtn" class="data-btn add-btn">
+                                    <i class="fas fa-plus"></i>
+                                    添加数据
+                                </button>
+                                <button id="uploadDataBtn" class="data-btn upload-btn">
+                                    <i class="fas fa-upload"></i>
+                                    上传数据
+                                </button>
+                                <button id="loadDataBtn" class="data-btn load-btn">
+                                    <i class="fas fa-folder-open"></i>
+                                    加载数据
+                                </button>
+                                <button id="saveDataBtn" class="data-btn save-btn">
+                                    <i class="fas fa-save"></i>
+                                    保存数据
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="dataList" class="data-list">
+                                <!-- 数据项将通过JavaScript动态添加 -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 接收方公钥列表卡片 -->
+                    <div class="card mt-6">
+                        <div class="card-header">
+                            <h2 class="card-title">接收方公钥列表</h2>
+                            <div class="key-actions">
+                                <button id="getPublicKeysBtn" class="key-btn refresh-btn">
+                                    <i class="fas fa-sync-alt"></i>
+                                    获取公钥
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="publicKeyList" class="public-key-list">
+                                <!-- 公钥项将通过JavaScript动态添加 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右侧：操作面板 -->
+                <div class="right-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">数据操作</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="operation-panel">
+                                <!-- 数据选择 -->
+                                <div class="form-group">
+                                    <label for="selectedData">选择数据</label>
+                                    <select id="selectedData" class="select-input">
+                                        <option value="">请选择数据</option>
+                                    </select>
+                                </div>
+
+                                <!-- 接收方选择 -->
+                                <div class="form-group">
+                                    <label for="selectedReceiver">选择接收方</label>
+                                    <select id="selectedReceiver" class="select-input">
+                                        <option value="">请选择接收方</option>
+                                    </select>
+                                </div>
+
+                                <!-- 操作按钮组 -->
+                                <div class="operation-actions">
+                                    <button id="encryptBtn" class="operation-btn encrypt-btn" disabled>
+                                        <i class="fas fa-file-export"></i>
+                                        生成数据请求包
+                                    </button>
+                                    <button id="sendBtn" class="operation-btn send-btn" disabled>
+                                        <i class="fas fa-paper-plane"></i>
+                                        发送签名加密包
+                                    </button>
+                                </div>
+
+                                <!-- 数据请求展示区 -->
+                                <div class="request-section">
+                                    <div class="section-header">
+                                        <h3 class="section-title">数据请求</h3>
+                                        <button id="checkRequestsBtn" class="check-btn">
+                                            <i class="fas fa-bell"></i>
+                                            接收请求
+                                        </button>
+                                    </div>
+                                    <div id="requestDisplay" class="request-display">
+                                        <!-- 请求信息将在这里显示 -->
+                                        <p class="empty-message">暂无数据请求</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 添加数据弹窗 -->
+    <div id="addDataModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">添加数据</h3>
+                <button class="close-btn" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addDataForm">
+                    <div class="form-group">
+                        <label for="dataName">数据名称</label>
+                        <input type="text" id="dataName" placeholder="请输入数据名称" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dataValue">数据值（仅限数字）</label>
+                        <input type="number" id="dataValue" placeholder="请输入数字" required min="0" step="1">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="cancel-btn" id="cancelAdd">取消</button>
+                        <button type="submit" class="submit-btn">确认添加</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加文件输入框（隐藏） -->
+    <input type="file" id="loadFileInput" accept=".json" style="display: none;">
+    <input type="file" id="saveFileInput" accept=".json" style="display: none;">
+
+    <!-- 隐藏的文件输入 -->
+    <input type="file" id="encPackageInput" style="display: none;">
+
+    <script src="static/js/starsky.js"></script>
+    <script src="static/js/sender.js"></script>
+</body>
+
+</html> 
