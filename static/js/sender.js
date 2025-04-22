@@ -30,8 +30,8 @@ let lastPublicKeyUpdateTime = null;
 
 // 检查登录状态
 function checkLogin() {
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
-    const userType = localStorage.getItem('userType');
+    const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+    const userType = sessionStorage.getItem('userType');
 
     if (!isLoggedIn || userType !== 'sender') {
         window.location.href = 'login.html';
@@ -45,9 +45,9 @@ if (!checkLogin()) {
     throw new Error('未登录或用户类型不正确');
 }
 
-// 从localStorage获取服务器地址和用户信息
-const serverAddress = localStorage.getItem('serverAddress');
-const username = localStorage.getItem('username');
+// 从sessionStorage获取服务器地址和用户信息
+const serverAddress = sessionStorage.getItem('serverAddress');
+const username = sessionStorage.getItem('username');
 
 // 显示用户名
 usernameSpan.textContent = username;
@@ -365,14 +365,6 @@ async function generateEncryptionPackage() {
 
 // 发送签名加密包
 function sendEncryptionPackage() {
-    const dataName = selectedData.value;
-    const receiverName = selectedReceiver.value;
-
-    if (!dataName || !receiverName) {
-        showMessage('error', '请选择数据和接收方');
-        return;
-    }
-
     // 创建弹窗
     const modalHtml = `
         <div class="modal active" id="sendPackageModal">
@@ -440,8 +432,6 @@ function sendEncryptionPackage() {
                     'Username': username
                 },
                 body: JSON.stringify({
-                    data_id: dataName,
-                    receiver: receiverName,
                     sender: username,
                     encrypted_data: base64Content
                 })
@@ -466,7 +456,7 @@ async function checkRequests() {
     try {
         showMessage('info', '正在获取数据请求...');
 
-        const response = await fetch(`${serverAddress}/sender/get_data_id?username=${username}`, {
+        const response = await fetch(`${serverAddress}/sender/get_data_id`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -477,26 +467,23 @@ async function checkRequests() {
         const data = await response.json();
 
         if (data.status === "success") {
-            if (data.data && data.data.length > 0) {
-                // 正确处理 [{username: data_id}] 结构
-                requestDisplay.innerHTML = data.data.map(item => {
-                    const [username, data_id] = Object.entries(item)[0];  // 取出键值对
-                    return `
-                        <div class="request-item">
-                            <div class="request-content">
-                                <div class="request-header">
-                                    <div class="request-user">
-                                        <i class="fas fa-user"></i>
-                                        ${username}
-                                    </div>
-                                    <div class="request-id">
-                                        ${data_id}
-                                    </div>
+            if (data.data && Object.keys(data.data).length > 0) {
+                // 将字典转换为数组进行展示
+                requestDisplay.innerHTML = Object.entries(data.data).map(([username, data_id]) => `
+                    <div class="request-item">
+                        <div class="request-content">
+                            <div class="request-header">
+                                <div class="request-user">
+                                    <i class="fas fa-user"></i>
+                                    ${username}
+                                </div>
+                                <div class="request-id">
+                                    ${data_id}
                                 </div>
                             </div>
                         </div>
-                    `;
-                }).join('');
+                    </div>
+                `).join('');
                 showMessage('success', '获取请求成功');
             } else {
                 showMessage('success', '暂无数据请求');
@@ -571,9 +558,9 @@ checkRequestsBtn.addEventListener('click', checkRequests);
 
 // 退出登录
 logoutBtn.addEventListener('click', () => {
-    localStorage.removeItem('username');
-    localStorage.removeItem('userType');
-    localStorage.removeItem('isLoggedIn');
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('userType');
+    sessionStorage.removeItem('isLoggedIn');
     window.location.href = 'login.html';
 });
 

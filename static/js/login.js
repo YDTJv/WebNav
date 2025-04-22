@@ -1,10 +1,10 @@
 const loginForm = document.getElementById('loginForm');
 
-// 从localStorage获取服务器地址
-if (!localStorage.getItem('serverAddress')) {
-    localStorage.setItem('serverAddress', 'http://10.24.37.3:5001');
+// 从sessionStorage获取服务器地址
+if (!sessionStorage.getItem('serverAddress')) {
+    sessionStorage.setItem('serverAddress', 'http://10.24.37.3:5001');
 }
-const serverAddress = localStorage.getItem('serverAddress');
+const serverAddress = sessionStorage.getItem('serverAddress');
 
 // 计算SHA256哈希
 async function sha256(message) {
@@ -96,10 +96,10 @@ loginForm.addEventListener('submit', async function (e) {
         const data = await response.json();
 
         if (data.message === "登录成功") {
-            // 登录成功，保存用户信息到localStorage
-            localStorage.setItem('username', username);
-            localStorage.setItem('userType', userType);
-            localStorage.setItem('isLoggedIn', 'true');
+            // 登录成功，保存用户信息到sessionStorage
+            sessionStorage.setItem('username', username);
+            sessionStorage.setItem('userType', userType);
+            sessionStorage.setItem('isLoggedIn', 'true');
             
             showMessage('success', '登录成功！正在跳转...');
             
