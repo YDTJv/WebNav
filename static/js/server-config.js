@@ -1,6 +1,6 @@
 // 检查是否已配置服务器地址
 function checkServerConfig() {
-    const serverAddress = sessionStorage.getItem('serverAddress');
+    const serverAddress = localStorage.getItem('serverAddress');
     if (!serverAddress) {
         showServerConfigModal();
     }
@@ -133,8 +133,8 @@ function showServerConfigModal() {
             return;
         }
 
-        // 保存到 sessionStorage
-        sessionStorage.setItem('serverAddress', `http://${serverAddress}`);
+        // 保存到 localStorage
+        localStorage.setItem('serverAddress', `http://${serverAddress}`);
         
         // 显示成功消息
         showMessage('success', '服务器配置已保存');

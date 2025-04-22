@@ -1,10 +1,10 @@
 const registerForm = document.getElementById('registerForm');
 
-// 从sessionStorage获取服务器地址
-if (!sessionStorage.getItem('serverAddress')) {
-    sessionStorage.setItem('serverAddress', 'http://10.24.37.3:5001');
+// 从localStorage获取服务器地址
+if (!localStorage.getItem('serverAddress')) {
+    localStorage.setItem('serverAddress', 'http://10.24.37.3:5001');
 }
-const serverAddress = sessionStorage.getItem('serverAddress');
+const serverAddress = localStorage.getItem('serverAddress');
 
 // 计算SHA256哈希
 async function sha256(message) {

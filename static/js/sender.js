@@ -30,8 +30,8 @@ let lastPublicKeyUpdateTime = null;
 
 // 检查登录状态
 function checkLogin() {
-    const isLoggedIn = sessionStorage.getItem('isLoggedIn');
-    const userType = sessionStorage.getItem('userType');
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    const userType = localStorage.getItem('userType');
 
     if (!isLoggedIn || userType !== 'sender') {
         window.location.href = 'login.html';
@@ -45,9 +45,9 @@ if (!checkLogin()) {
     throw new Error('未登录或用户类型不正确');
 }
 
-// 从sessionStorage获取服务器地址和用户信息
-const serverAddress = sessionStorage.getItem('serverAddress');
-const username = sessionStorage.getItem('username');
+// 从localStorage获取服务器地址和用户信息
+const serverAddress = localStorage.getItem('serverAddress');
+const username = localStorage.getItem('username');
 
 // 显示用户名
 usernameSpan.textContent = username;
@@ -440,8 +440,8 @@ function sendEncryptionPackage() {
                     'Username': username
                 },
                 body: JSON.stringify({
-                    receiver: receiverName,
                     data_id: dataName,
+                    receiver: receiverName,
                     sender: username,
                     encrypted_data: base64Content
                 })
@@ -466,7 +466,7 @@ async function checkRequests() {
     try {
         showMessage('info', '正在获取数据请求...');
 
-        const response = await fetch(`${serverAddress}/sender/get_data_id`, {
+        const response = await fetch(`${serverAddress}/sender/get_data_id?username=${username}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -571,9 +571,9 @@ checkRequestsBtn.addEventListener('click', checkRequests);
 
 // 退出登录
 logoutBtn.addEventListener('click', () => {
-    sessionStorage.removeItem('username');
-    sessionStorage.removeItem('userType');
-    sessionStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('username');
+    localStorage.removeItem('userType');
+    localStorage.removeItem('isLoggedIn');
     window.location.href = 'login.html';
 });
 
