@@ -30,8 +30,8 @@ let lastPublicKeyUpdateTime = null;
 
 // 检查登录状态
 function checkLogin() {
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
-    const userType = localStorage.getItem('userType');
+    const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+    const userType = sessionStorage.getItem('userType');
 
     if (!isLoggedIn || userType !== 'sender') {
         window.location.href = 'login.html';
@@ -45,9 +45,9 @@ if (!checkLogin()) {
     throw new Error('未登录或用户类型不正确');
 }
 
-// 从localStorage获取服务器地址和用户信息
-const serverAddress = localStorage.getItem('serverAddress');
-const username = localStorage.getItem('username');
+// 从sessionStorage获取服务器地址和用户信息
+const serverAddress = sessionStorage.getItem('serverAddress');
+const username = sessionStorage.getItem('username');
 
 // 显示用户名
 usernameSpan.textContent = username;
@@ -571,9 +571,9 @@ checkRequestsBtn.addEventListener('click', checkRequests);
 
 // 退出登录
 logoutBtn.addEventListener('click', () => {
-    localStorage.removeItem('username');
-    localStorage.removeItem('userType');
-    localStorage.removeItem('isLoggedIn');
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('userType');
+    sessionStorage.removeItem('isLoggedIn');
     window.location.href = 'login.html';
 });
 
